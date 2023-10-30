@@ -38,15 +38,33 @@ fun getPlayerInput() : Map<Char, Int> {
 
 }
 
-fun isSpaceEmpty(coordinates : Map<Char, Int>, board: Array<Array<Char>>) : Boolean {
+fun isSpaceEmpty(coordinates : Map<Char, Int>, board : Array<Array<Char>>) : Boolean {
     return board[coordinates['y']!!][coordinates['x']!!] == ' '
 }
 
-fun updateBoard(player : Int, coordinates : Map<Char, Int>, board: Array<Array<Char>>) : Array<Array<Char>> {
+fun updateBoard(player : Int, coordinates : Map<Char, Int>, board : Array<Array<Char>>) : Array<Array<Char>> {
     if (player == 1) board[coordinates['y']!!][coordinates['x']!!] = 'X'
     else if (player == 2) board[coordinates['y']!!][coordinates['x']!!] = 'O'
 
     return board
+}
+
+fun getWinner(board : Array<Array<Char>>) : Int {
+    val symbols = arrayOf('X', 'O')
+    for (symbol in symbols) {
+        for (y in board.indices) {
+            if (board[y][0] == symbol && board[y][0] == board[y][1] && board[y][1] == board[y][2]) return symbols.indexOf(symbol) + 1
+        }
+        for (y in board.indices) {
+            if (board[0][y] == symbol && board[0][y] == board[1][y] && board[1][y] == board[2][y]) return symbols.indexOf(symbol) + 1
+        }
+
+        if (board[1][1] == ' ') return 0
+        else if (board[1][1] == symbol && board[0][0] == board[1][1] && board[1][1] == board[2][2]) return symbols.indexOf(symbol) + 1
+        else if (board[1][1] == symbol && board[0][2] == board[1][1] && board[1][1] == board[2][0]) return symbols.indexOf(symbol) + 1
+    }
+
+    return 0
 }
 
 fun main() {
@@ -70,5 +88,17 @@ fun main() {
         }
 
         board = updateBoard(player, playerMoveCoordinates, board)
+        val winner = getWinner(board)
+
+        if (round == 8 && winner == 0) {
+            print("Draw!")
+            break
+        }
+
+        if (winner == 0) continue
+
+        println("Player $winner won!")
+        break
     }
+
 }
