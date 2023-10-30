@@ -91,12 +91,14 @@ fun main() {
         val winner = getWinner(board)
 
         if (round == 8 && winner == 0) {
+            printBoard(board)
             print("Draw!")
             break
         }
 
         if (winner == 0) continue
 
+        printBoard(board)
         println("Player $winner won!")
         break
     }
