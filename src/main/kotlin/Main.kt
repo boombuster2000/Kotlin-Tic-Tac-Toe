@@ -7,7 +7,7 @@ fun printBoard(board: Array<Array<Char>>) {
     }
 }
 
-fun getPlayerInput() : Map<String, Int> {
+fun getPlayerInput() : Map<Char, Int> {
     while (true) {
         print(">> ")
         val playerMoveUnformatted = readln()
@@ -17,7 +17,11 @@ fun getPlayerInput() : Map<String, Int> {
                 continue
             }
 
-            return mapOf("x" to playerMoveUnformatted[0].digitToInt(), "y" to playerMoveUnformatted[2].digitToInt())
+            if ( playerMoveUnformatted[0].digitToInt() !in 1..3 || playerMoveUnformatted[2].digitToInt() !in 1..3) {
+                println("X and Y is between 1 and 3 inclusive")
+                continue
+            }
+            return mapOf('x' to playerMoveUnformatted[0].digitToInt(), 'y' to playerMoveUnformatted[2].digitToInt())
 
         } catch (error: java.lang.IllegalArgumentException) {
             println("Input should be numbers")
@@ -28,21 +32,34 @@ fun getPlayerInput() : Map<String, Int> {
 
 }
 
-fun isSpaceEmpty(coordinates : Map<String, Int>, board: Array<Array<Char>>) : Boolean {
-    return board[coordinates["y"]!!][coordinates["x"]!!] == ' '
+fun isSpaceEmpty(coordinates : Map<Char, Int>, board: Array<Array<Char>>) : Boolean {
+    return board[coordinates['y']!!][coordinates['x']!!] == ' '
+}
+
+fun updateBoard(player : Int, coordinates : Map<Char, Int>, board: Array<Array<Char>>) : Array<Array<Char>> {
+    if (player == 1) board[coordinates['y']!!][coordinates['x']!!] = 'X'
+    else if (player == 2) board[coordinates['y']!!][coordinates['x']!!] = 'O'
+
+    return board
 }
 
 fun main() {
-    val board = arrayOf(
+    var board = arrayOf(
         arrayOf(' ', ' ', ' '),
         arrayOf(' ', ' ', ' '),
         arrayOf(' ', ' ', ' ')
     )
 
     printBoard(board)
+    val playerMoveCoordinates : Map<Char, Int>
+
     while (true) {
-        val playerMoveCoordinates = getPlayerInput()
-        if (!isSpaceEmpty(playerMoveCoordinates, board)) continue
+        val playerMoveCoordinatesUnvalidated = getPlayerInput()
+        if (!isSpaceEmpty(playerMoveCoordinatesUnvalidated, board)) continue
+        playerMoveCoordinates = playerMoveCoordinatesUnvalidated
         break
     }
+
+    board = updateBoard(1, playerMoveCoordinates, board)
+    printBoard(board)
 }
