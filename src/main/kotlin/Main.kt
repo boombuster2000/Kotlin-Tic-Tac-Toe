@@ -26,7 +26,7 @@ fun getPlayerInput() : Map<Char, Int> {
                 println("X and Y is between 1 and 3 inclusive")
                 continue
             }
-            return mapOf('x' to playerMoveUnformatted[0].digitToInt()-1, 'y' to playerMoveUnformatted[2].digitToInt()-1)
+            return mapOf('y' to playerMoveUnformatted[0].digitToInt()-1, 'x' to playerMoveUnformatted[2].digitToInt()-1)
 
         } catch (error: java.lang.IllegalArgumentException) {
             println("Input should be numbers")
@@ -55,8 +55,8 @@ fun main() {
         arrayOf(' ', ' ', ' ')
     )
 
-    for (round in 1..9) {
-        val player = round % 2
+    for (round in 0..8) {
+        val player = (round % 2) + 1
 
         printBoard(board)
         val playerMoveCoordinates: Map<Char, Int>
