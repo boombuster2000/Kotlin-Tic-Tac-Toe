@@ -6,9 +6,10 @@ fun printBoard(board: Array<Array<Char>>) {
     clearScreen()
     for (y in board.indices) {
         for (x in board[y].indices) {
-            print(" ${board[y][x]} |")
+            print(" ${board[y][x]}")
+            if (x != 2) print(" |")
         }
-        if (y != 2) println("\n---+---+---+---") else println()
+        if (y != 2) println("\n---+---+---") else println()
     }
 }
 
