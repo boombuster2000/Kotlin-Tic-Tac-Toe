@@ -1,4 +1,9 @@
+fun clearScreen() {
+    for (i in 0..80*300) println()
+}
+
 fun printBoard(board: Array<Array<Char>>) {
+    clearScreen()
     for (y in board.indices) {
         for (x in board[y].indices) {
             print(" ${board[y][x]} |")
@@ -42,7 +47,6 @@ fun updateBoard(player : Int, coordinates : Map<Char, Int>, board: Array<Array<C
 
     return board
 }
-
 fun main() {
     var board = arrayOf(
         arrayOf(' ', ' ', ' '),
