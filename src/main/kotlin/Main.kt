@@ -1,7 +1,3 @@
-enum class Coordinates {
-    X,Y
-}
-
 fun clearScreen() {
     for (i in 0..80*300) println()
 }
