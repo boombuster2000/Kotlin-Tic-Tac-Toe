@@ -1,7 +1,19 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+fun printBoard(board: Array<Array<String>>) {
+    for (y in board.indices) {
+        for (x in board[y].indices) {
+            print(" ${board[y][x]} |")
+        }
+        if (y != 2) println("\n---+---+---+---")
+    }
+}
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main() {
+    val board = arrayOf(
+        arrayOf(" ", " ", " "),
+        arrayOf(" ", " ", " "),
+        arrayOf(" ", " ", " ")
+    )
+
+    printBoard(board)
+
 }
