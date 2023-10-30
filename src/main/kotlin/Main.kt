@@ -1,4 +1,4 @@
-fun printBoard(board: Array<Array<String>>) {
+fun printBoard(board: Array<Array<Char>>) {
     for (y in board.indices) {
         for (x in board[y].indices) {
             print(" ${board[y][x]} |")
@@ -7,7 +7,7 @@ fun printBoard(board: Array<Array<String>>) {
     }
 }
 
-fun getPlayerInput(): Map<String, Int> {
+fun getPlayerInput() : Map<String, Int> {
     while (true) {
         print(">> ")
         val playerMoveUnformatted = readln()
@@ -27,14 +27,22 @@ fun getPlayerInput(): Map<String, Int> {
     }
 
 }
+
+fun isSpaceEmpty(coordinates : Map<String, Int>, board: Array<Array<Char>>) : Boolean {
+    return board[coordinates["y"]!!][coordinates["x"]!!] == ' '
+}
+
 fun main() {
     val board = arrayOf(
-        arrayOf(" ", " ", " "),
-        arrayOf(" ", " ", " "),
-        arrayOf(" ", " ", " ")
+        arrayOf(' ', ' ', ' '),
+        arrayOf(' ', ' ', ' '),
+        arrayOf(' ', ' ', ' ')
     )
 
     printBoard(board)
-    getPlayerInput()
-
+    while (true) {
+        val playerMoveCoordinates = getPlayerInput()
+        if (!isSpaceEmpty(playerMoveCoordinates, board)) continue
+        break
+    }
 }
