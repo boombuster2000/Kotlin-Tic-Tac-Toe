@@ -26,7 +26,7 @@ fun getPlayerInput() : Map<Char, Int> {
                 println("X and Y is between 1 and 3 inclusive")
                 continue
             }
-            return mapOf('x' to playerMoveUnformatted[0].digitToInt(), 'y' to playerMoveUnformatted[2].digitToInt())
+            return mapOf('x' to playerMoveUnformatted[0].digitToInt()-1, 'y' to playerMoveUnformatted[2].digitToInt()-1)
 
         } catch (error: java.lang.IllegalArgumentException) {
             println("Input should be numbers")
@@ -47,6 +47,7 @@ fun updateBoard(player : Int, coordinates : Map<Char, Int>, board: Array<Array<C
 
     return board
 }
+
 fun main() {
     var board = arrayOf(
         arrayOf(' ', ' ', ' '),
@@ -54,16 +55,19 @@ fun main() {
         arrayOf(' ', ' ', ' ')
     )
 
-    printBoard(board)
-    val playerMoveCoordinates : Map<Char, Int>
+    for (round in 1..9) {
+        val player = round % 2
 
-    while (true) {
-        val playerMoveCoordinatesUnvalidated = getPlayerInput()
-        if (!isSpaceEmpty(playerMoveCoordinatesUnvalidated, board)) continue
-        playerMoveCoordinates = playerMoveCoordinatesUnvalidated
-        break
+        printBoard(board)
+        val playerMoveCoordinates: Map<Char, Int>
+
+        while (true) {
+            val playerMoveCoordinatesUnvalidated = getPlayerInput()
+            if (!isSpaceEmpty(playerMoveCoordinatesUnvalidated, board)) continue
+            playerMoveCoordinates = playerMoveCoordinatesUnvalidated
+            break
+        }
+
+        board = updateBoard(player, playerMoveCoordinates, board)
     }
-
-    board = updateBoard(1, playerMoveCoordinates, board)
-    printBoard(board)
 }
